@@ -1,0 +1,19 @@
+{
+  "name": "udemy-reversi-webapp",
+  "version": "1.0.0",
+  "description": "「リバーシで学アプリケーション設計入門」学習用リポジトリ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diagonal-m/udemy-reversi-webapp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diagonal-m/udemy-reversi-webapp/issues"
+  },
+  "homepage": "https://github.com/diagonal-m/udemy-reversi-webapp#readme"
+}

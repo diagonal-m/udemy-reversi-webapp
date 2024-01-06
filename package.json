@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/diagonal-m/udemy-reversi-webapp/issues"
   },
-  "homepage": "https://github.com/diagonal-m/udemy-reversi-webapp#readme"
+  "homepage": "https://github.com/diagonal-m/udemy-reversi-webapp#readme",
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.3"
+  }
 }

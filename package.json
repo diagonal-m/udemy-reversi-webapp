@@ -4,6 +4,7 @@
   "description": "「リバーシで学アプリケーション設計入門」学習用リポジトリ",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,10 +19,14 @@
   "homepage": "https://github.com/diagonal-m/udemy-reversi-webapp#readme",
   "devDependencies": {
     "@types/express": "^4.17.14",
+    "@types/morgan": "^1.9.3",
+    "nodemon": "^2.0.20",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.3"
   },
   "dependencies": {
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "express-async-errors": "^3.1.1",
+    "morgan": "^1.10.0"
   }
 }

@@ -40,7 +40,14 @@ async function showBoard() {
   })
 }
 
+async function registerGame() {
+  await fetch('/api/games', {
+    method: 'POST'
+  })
+}
+
 async function main() {
+  await registerGame()
   await showBoard()
 }
 

@@ -55,4 +55,8 @@ export class Turn {
   get endAt() {
     return this._endAt
   }
+
+  get move() {
+    return this._move
+  }
 }

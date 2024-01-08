@@ -4,6 +4,10 @@ import { SquareGateway } from '../dataaccess/squareGateway'
 import { connectMySQL } from '../dataaccess/connection'
 import { MoveGateway } from '../dataaccess/moveGateway'
 import { DARK, LIGHT } from '../constants'
+import { Board } from '../domain/board'
+import { Turn } from '../domain/turn'
+import { toDisc } from '../domain/disc'
+import { Point } from '../domain/point'
 
 const gameGateway = new GameGateway()
 const turnGateway = new TurnGateway()
@@ -89,20 +93,23 @@ export class TurnService {
       squareRecords.forEach((s) => {
         board[s.y][s.x] =s.disc
       })
-    
-      // TODO 盤面に置けるかチェック
+
+      const previousTurn = new Turn(
+        gameRecord.id,
+        previoustTurnCount,
+        toDisc(previousTurnRecord.nextDisc),
+        undefined,
+        new Board(board),
+        previousTurnRecord.endAt
+      )
 
       // 石を置く
-      board[y][x] = disc
-
-      // TODO ひっくり返す
+      const newTurn = previousTurn.placeNext(toDisc(disc), new Point(x, y))
 
       // ターンを保存する
-      const nextDisc = disc === DARK ? LIGHT : DARK
-      const now = new Date()
-      const turnRecord = await turnGateway.insert(conn, gameRecord.id, turnCount, nextDisc, now)
+      const turnRecord = await turnGateway.insert(conn, newTurn.gameId, newTurn.turnCount, newTurn.nextDisc, newTurn.endAt)
 
-      await squareGateway.insertAll(conn, turnRecord.id, board)
+      await squareGateway.insertAll(conn, turnRecord.id, newTurn.board.discs)
 
       await moveGateway.insert(conn, turnRecord.id, disc, x, y)
 

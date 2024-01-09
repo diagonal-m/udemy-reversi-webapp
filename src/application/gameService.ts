@@ -1,9 +1,9 @@
 import { connectMySQL } from '../infrastructure/connection'
 import { GameGateway } from '../infrastructure/gameGateway'
-import { TurnRepository } from '../domain/turn/turnRepository'
-import { firstTurn } from '../domain/turn/turn'
-import { GameRepository } from '../domain/game/gameRepository'
-import { Game } from '../domain/game/game'
+import { TurnRepository } from '../domain/model/turn/turnRepository'
+import { firstTurn } from '../domain/model/turn/turn'
+import { GameRepository } from '../domain/model/game/gameRepository'
+import { Game } from '../domain/model/game/game'
 
 const gameGateway = new GameGateway()
 

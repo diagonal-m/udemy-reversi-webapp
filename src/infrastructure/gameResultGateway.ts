@@ -1,5 +1,5 @@
-import mysql from "mysql2/promise"
-import { GameResultRecord } from "./gameResultRecord";
+import mysql from 'mysql2/promise'
+import { GameResultRecord } from './gameResultRecord'
 
 export class GameResultGateway {
   async findForGameId(
@@ -24,7 +24,12 @@ export class GameResultGateway {
     )
   }
 
-  async insert(conn: mysql.Connection, gameId: number, winnerDisc: number, endAt: Date) {
+  async insert(
+    conn: mysql.Connection,
+    gameId: number,
+    winnerDisc: number,
+    endAt: Date
+  ) {
     await conn.execute(
       'insert into game_results (game_id, winner_disc, end_at) values (?, ?, ?)',
       [gameId, winnerDisc, endAt]

@@ -1,4 +1,4 @@
-import { DomainError } from "../../error/domainError"
+import { DomainError } from '../../error/DomainError'
 
 export const WinnerDisc = {
   Draw: 0,
@@ -10,7 +10,7 @@ export type WinnerDisc = typeof WinnerDisc[keyof typeof WinnerDisc]
 
 export function toWinnerDisc(value: any): WinnerDisc {
   if (!Object.values(WinnerDisc).includes(value)) {
-    throw new DomainError('InvalidWinnerDiscValu', 'Invalid winner disc value')
+    throw new DomainError('InvalidWinnerDiscValue', 'Invalid winner disc value')
   }
 
   return value as WinnerDisc

@@ -1,10 +1,10 @@
 import express from 'express'
-import morgan from 'morgan'
 import 'express-async-errors'
+import morgan from 'morgan'
+import { ApplicationError } from './application/error/applicationError'
+import { DomainError } from './domain/error/DomainError'
 import { gameRouter } from './presentation/gameRouter'
 import { turnRouter } from './presentation/turnRouter'
-import { DomainError } from './domain/error/domainError'
-import { ApplicationError } from './application/error/applicationError'
 
 const PORT = 3333
 
@@ -23,7 +23,17 @@ app.listen(PORT, () => {
   console.log(`Reversi application started: http://localhost:${PORT}`)
 })
 
-function errorHandler(err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) {
+interface ErrorResponseBody {
+  type: string
+  message: string
+}
+
+function errorHandler(
+  err: any,
+  _req: express.Request,
+  res: express.Response<ErrorResponseBody>,
+  _next: express.NextFunction
+) {
   if (err instanceof DomainError) {
     res.status(400).json({
       type: err.type,
@@ -44,7 +54,8 @@ function errorHandler(err: any, _req: express.Request, res: express.Response, _n
   }
 
   console.error('Unexpected error occurred', err)
-  res.status(500).send({
+  res.status(500).json({
+    type: 'UnecpectedError',
     message: 'Unexpected error occurred'
   })
 }

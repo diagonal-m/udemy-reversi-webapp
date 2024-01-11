@@ -1,4 +1,4 @@
-import { DomainError } from "../../error/domainError";
+import { DomainError } from '../../error/DomainError'
 
 export const Disc = {
   Empty: 0,
@@ -13,6 +13,7 @@ export function toDisc(value: any): Disc {
   if (!Object.values(Disc).includes(value)) {
     throw new DomainError('InvalidDiscValue', 'Invalid disc value')
   }
+
   return value as Disc
 }
 

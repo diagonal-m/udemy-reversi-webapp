@@ -1,9 +1,9 @@
-import { DomainError } from "../../error/domainError";
-import { WinnerDisc } from "../gameResult/winnerDisc";
-import { Board, initialBoard } from "./board";
-import { Disc } from "./disc";
-import { Move } from "./move";
-import { Point } from "./point";
+import { DomainError } from '../../error/DomainError'
+import { WinnerDisc } from '../gameResult/winnerDisc'
+import { Board, initialBoard } from './board'
+import { Disc } from './disc'
+import { Move } from './move'
+import { Point } from './point'
 
 export class Turn {
   constructor(
@@ -18,21 +18,24 @@ export class Turn {
   placeNext(disc: Disc, point: Point): Turn {
     // 打とうとした石が、次の石ではない場合、置くことはできない
     if (disc !== this._nextDisc) {
-      throw new DomainError('SelectedDiscIsNotNextDisc', 'Selected disc is not next disc')
+      throw new DomainError(
+        'SelectedDiscIsNotNextDisc',
+        'Selected disc is not next disc'
+      )
     }
 
     const move = new Move(disc, point)
 
-    const nextBorad = this._board.place(move)
+    const nextBoard = this._board.place(move)
 
-    const nextDisc = this.decideNextDisc(nextBorad, disc)
+    const nextDisc = this.decideNextDisc(nextBoard, disc)
 
     return new Turn(
       this._gameId,
       this._turnCount + 1,
       nextDisc,
       move,
-      nextBorad,
+      nextBoard,
       new Date()
     )
   }
@@ -42,13 +45,13 @@ export class Turn {
   }
 
   winnerDisc(): WinnerDisc {
-    const darkCount = this._board.count(Disc.Dark)
-    const lightCount = this._board.count(Disc.Light)
+    const darkCount = this.board.count(Disc.Dark)
+    const lightCount = this.board.count(Disc.Light)
 
     if (darkCount === lightCount) {
       return WinnerDisc.Draw
     } else if (darkCount > lightCount) {
-      return WinnerDisc.Light
+      return WinnerDisc.Dark
     } else {
       return WinnerDisc.Light
     }
@@ -62,9 +65,10 @@ export class Turn {
       // 両方置ける場合は、前の石と反対の石の番
       return previousDisc === Disc.Dark ? Disc.Light : Disc.Dark
     } else if (!existDarkValidMove && !existLightValidMove) {
-      // 両方置けない場合は、次の石はない
+      // 両方置けない場合、次の石はない
       return undefined
     } else if (existDarkValidMove) {
+      // 片方しか置けない場合は、置けるほうの石の番
       return Disc.Dark
     } else {
       return Disc.Light
@@ -83,6 +87,10 @@ export class Turn {
     return this._nextDisc
   }
 
+  get move() {
+    return this._move
+  }
+
   get board() {
     return this._board
   }
@@ -90,19 +98,8 @@ export class Turn {
   get endAt() {
     return this._endAt
   }
-
-  get move() {
-    return this._move
-  }
 }
 
 export function firstTurn(gameId: number, endAt: Date): Turn {
-  return new Turn(
-    gameId,
-    0,
-    Disc.Dark,
-    undefined,
-    initialBoard,
-    endAt
-  )
+  return new Turn(gameId, 0, Disc.Dark, undefined, initialBoard, endAt)
 }

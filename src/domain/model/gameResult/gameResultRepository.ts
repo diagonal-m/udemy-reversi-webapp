@@ -1,12 +1,15 @@
-import mysql from "mysql2/promise"
-import { GameResult } from "./gameResult";
-import { GameResultGateway } from "../../../infrastructure/gameResultGateway";
-import { toWinnerDisc } from "./winnerDisc";
+import mysql from 'mysql2/promise'
+import { GameResultGateway } from '../../../infrastructure/gameResultGateway'
+import { GameResult } from './gameResult'
+import { toWinnerDisc } from './winnerDisc'
 
 const gameResultGateway = new GameResultGateway()
 
 export class GameResultRepository {
-  async findForGameId(conn: mysql.Connection, gameId: number): Promise<GameResult | undefined> {
+  async findForGameId(
+    conn: mysql.Connection,
+    gameId: number
+  ): Promise<GameResult | undefined> {
     const gameResultRecord = await gameResultGateway.findForGameId(conn, gameId)
 
     if (!gameResultRecord) {
@@ -24,7 +27,7 @@ export class GameResultRepository {
     await gameResultGateway.insert(
       conn,
       gameResult.gameId,
-      gameResult.winnerDisc,
+      gameResult.winenrDisc,
       gameResult.endAt
     )
   }

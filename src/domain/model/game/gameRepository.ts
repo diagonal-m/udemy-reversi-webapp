@@ -1,12 +1,13 @@
 import mysql from 'mysql2/promise'
-import { Game } from './game';
-import { GameGateway } from '../../../infrastructure/gameGateway';
+import { GameGateway } from '../../../infrastructure/gameGateway'
+import { Game } from './game'
 
 const gameGateway = new GameGateway()
 
 export class GameRepository {
   async findLatest(conn: mysql.Connection): Promise<Game | undefined> {
     const gameRecord = await gameGateway.findLatest(conn)
+
     if (!gameRecord) {
       return undefined
     }

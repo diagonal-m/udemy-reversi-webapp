@@ -1,16 +1,16 @@
 import express from 'express'
 import { TurnService } from '../application/service/turnService'
-import { Point } from '../domain/model/turn/point'
 import { toDisc } from '../domain/model/turn/disc'
+import { Point } from '../domain/model/turn/point'
 
 export const turnRouter = express.Router()
 
 const turnService = new TurnService()
 
 interface TurnGetResponseBody {
-  turnCount: number,
-  board: number[][],
-  nextDisc: number | null,
+  turnCount: number
+  board: number[][]
+  nextDisc: number | null
   winnerDisc: number | null
 }
 
@@ -29,7 +29,8 @@ turnRouter.get(
     }
 
     res.json(responseBody)
-})
+  }
+)
 
 interface TurnPostRequestBody {
   turnCount: number
@@ -40,12 +41,16 @@ interface TurnPostRequestBody {
   }
 }
 
-turnRouter.post('/api/games/latest/turns', async (req: express.Request<{}, {}, TurnPostRequestBody>, res) => {
-  const turnCount = req.body.turnCount
-  const disc = toDisc(req.body.move.disc)
-  const point = new Point(req.body.move.x, req.body.move.y)
+turnRouter.post(
+  '/api/games/latest/turns',
+  async (req: express.Request<{}, {}, TurnPostRequestBody>, res) => {
+    const turnCount = req.body.turnCount
+    const disc = req.body.move.disc
+    const x = req.body.move.x
+    const y = req.body.move.y
 
-  await turnService.registerTurn(turnCount, disc, point)
+    await turnService.registerTurn(turnCount, toDisc(disc), new Point(x, y))
 
-  res.status(201).end()
-})
+    res.status(201).end()
+  }
+)

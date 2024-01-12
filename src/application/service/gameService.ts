@@ -1,11 +1,8 @@
-import { connectMySQL } from '../infrastructure/connection'
-import { GameGateway } from '../infrastructure/gameGateway'
-import { TurnRepository } from '../domain/turn/turnRepository'
-import { firstTurn } from '../domain/turn/turn'
-import { GameRepository } from '../domain/game/gameRepository'
-import { Game } from '../domain/game/game'
-
-const gameGateway = new GameGateway()
+import { Game } from '../../domain/model/game/game'
+import { GameRepository } from '../../domain/model/game/gameRepository'
+import { firstTurn } from '../../domain/model/turn/turn'
+import { TurnRepository } from '../../domain/model/turn/turnRepository'
+import { connectMySQL } from '../../infrastructure/connection'
 
 const gameRepository = new GameRepository()
 const turnRepository = new TurnRepository()
@@ -13,9 +10,8 @@ const turnRepository = new TurnRepository()
 export class GameService {
   async startNewGame() {
     const now = new Date()
-  
-    const conn = await connectMySQL()
 
+    const conn = await connectMySQL()
     try {
       await conn.beginTransaction()
 
@@ -30,7 +26,7 @@ export class GameService {
 
       await conn.commit()
     } finally {
-      await conn.end
+      await conn.end()
     }
   }
 }

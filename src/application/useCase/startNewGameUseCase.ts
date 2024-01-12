@@ -4,13 +4,13 @@ import { firstTurn } from '../../domain/model/turn/turn'
 import { TurnRepository } from '../../domain/model/turn/turnRepository'
 import { connectMySQL } from '../../infrastructure/connection'
 
-export class GameService {
+export class StartNewGameUseCase {
   constructor(
     private _gameRepository: GameRepository,
     private _turnRepository: TurnRepository
   ) {}
 
-  async startNewGame() {
+  async run() {
     const now = new Date()
 
     const conn = await connectMySQL()

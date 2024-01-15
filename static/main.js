@@ -41,7 +41,12 @@ async function showBoard(turnCount, previousDisc) {
       } else {
         squareElement.addEventListener('click', async () => {
           const nextTurnCount = turnCount + 1
-          const registerTurnResponse = await registerTurn(nextTurnCount, nextDisc, x, y)
+          const registerTurnResponse = await registerTurn(
+            nextTurnCount,
+            nextDisc,
+            x,
+            y
+          )
           if (registerTurnResponse.ok) {
             await showBoard(nextTurnCount, nextDisc)
           }
